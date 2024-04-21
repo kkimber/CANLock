@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <title>CANLock Web Server</title>
+        <meta http-equiv="refresh" content="5" >
+        <style>
+        col {width: 20px}
+        th, td {border: 1px solid; padding: 10px; text-align: center;}
+        td.r {background-color: red;}
+        td.y {background-color: yellow;}
+        td.b {background-color: blue;}
+        td.w {background-color: white;}
+        td.na {background-color: lightgray;}
+        td.off {background-color: green;}
+        td.on {background-color: red;}
+        td.na:after {content:'NA';}
+        td.off:after {content: 'Off';}
+        td.on:after {content: 'On';}
+        </style>
+    </head>
+    <body>
+        <h1>CANLock Web Server</h1>
+        <br>
+        <h2>WiFi Configuration:</h2>
+        <p>Country Code: <!--#country--></p>
+        <p>Authentication: <!--#authmode--></p>
+        <br>
+        <h2>Grid Connect Server:</h2>
+        <p>Enabled: <!--#gcenable--></p>
+        <p>Port: <!--#gcport--></p>
+        <br>
+        <h2>Lever Frame Status:</h2>
+        <table>
+         <tbody>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <col/>
+         <tr>
+         <td class="y">1</td>
+         <td class="r">2</td>
+         <td class="r">3</td>
+         <td class="r">4</td>
+         <td class="w">5</td>
+         <td class="r">6</td>
+         <td class="r">7</td>
+         <td class="w">8</td>
+         <td class="b">9</td>
+         <td class="b">10</td>
+         <td class="b">11</td>
+         <td class="b">12</td>
+         <td class="b">13</td>
+         <td class="w">14</td>
+         <td class="r">15</td>
+         <td class="r">16</td>
+         <td class="r">17</td>
+         <td class="r">18</td>
+         <td class="r">19</td>
+         <td class="y">20</td>
+         </tr>
+         <tr>
+         <td class="off"><!--#lever1--></td>
+         <td class="off"><!--#lever2--></td>
+         <td class="off"><!--#lever3--></td>
+         <td class="off"><!--#lever4--></td>
+         <td class="na"><!--#lever5--></td>
+         <td class="on"><!--#lever6--></td>
+         <td class="on"><!--#lever7--></td>
+         <td class="na"><!--#lever8--></td>
+         <td class="on"><!--#lever9--></td>
+         <td class="on"><!--#lever10--></td>
+         <td class="on"><!--#lever11--></td>
+         <td class="on"><!--#lever12--></td>
+         <td class="on"><!--#lever13--></td>
+         <td class="na"><!--#lever14--></td>
+         <td class="on"><!--#lever15--></td>
+         <td class="on"><!--#lever16--></td>
+         <td class="on"><!--#lever17--></td>
+         <td class="on"><!--#lever18--></td>
+         <td class="on"><!--#lever19--></td>
+         <td class="on"><!--#lever20--></td>
+         </tr>
+         </tbody>
+         </table>
+         <p><b><!--#msg--></b></p>
+   </body>
+</html>

@@ -1,0 +1,95 @@
+name: CMake for building module and docs
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: write
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clean workspace
+      run: |
+        echo "Cleaning up previous run"
+        rm -rf "${{ github.workspace }}"
+        mkdir -p "${{ github.workspace }}"
+
+    - uses: actions/checkout@v3
+
+    - name: Checkout pico-sdk
+      uses: actions/checkout@v3
+      with:
+        repository: raspberrypi/pico-sdk
+        path: pico-sdk  
+
+    - name: Checkout Submodules
+      working-directory: ${{github.workspace}}
+      run: git submodule update --init        
+
+    - name: Checkout pico-sdk submodules
+      working-directory: ${{github.workspace}}/pico-sdk
+      run: git submodule update --init        
+      
+    - name: Apply FatFsPicoSPI patch
+      working-directory: ${{github.workspace}}/src/FatFsPicoSPI
+      run: |
+        echo "Patching no-OS-FatFS-SD-SPI-RPi-Pico cmake"
+        git apply ${{github.workspace}}/FatFsPicoSPI.patch
+      shell: bash
+
+    - name: Install Doxygen
+      run:  sudo apt-get install doxygen graphviz -y
+      shell: bash
+
+    - name: Get ARM toolchain
+      uses: carlosperate/arm-none-eabi-gcc-action@v1
+
+    - name: Configure CMake
+      # Use a bash shell so we can use the same syntax for environment variable
+      # access regardless of the host operating system
+      shell: bash
+      working-directory: ${{github.workspace}}
+      run: PICO_SDK_PATH=${{github.workspace}}/pico-sdk cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build
+      # Build your program with the given configuration
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Build Project Documentation
+      run: cmake --build ${{github.workspace}}/build --target doxygen
+      
+    - name: Publish Doxygen Docs
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ${{github.workspace}}/build/html        
+     
+    - name: Create a temporary artifact downloads folder
+      working-directory: ${{github.workspace}}    
+      run: mkdir downloads
+        
+    - name: Add artifacts to publish
+      run: |
+        cd downloads
+        cp ${{github.workspace}}/build/src/CANPico.bin .
+        cp ${{github.workspace}}/build/src/CANPico.uf2 .
+        cp ${{github.workspace}}/build/src/CANPico.elf .
+        cp ${{github.workspace}}/build/src/CANPico.elf.map .
+        cd ..
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with: 
+        name: build-binaries
+        path: downloads/  
+        

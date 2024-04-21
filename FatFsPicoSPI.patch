@@ -1,0 +1,16 @@
+diff --git a/FatFs_SPI/CMakeLists.txt b/FatFs_SPI/CMakeLists.txt
+index fd10517..82d29a4 100755
+--- a/FatFs_SPI/CMakeLists.txt
++++ b/FatFs_SPI/CMakeLists.txt
+@@ -20,6 +20,11 @@ target_include_directories(FatFs_SPI INTERFACE
+     sd_driver
+     include
+ )
++
++target_compile_options(FatFs_SPI INTERFACE
++  -Wno-unused-parameter -Wno-unused-variable
++)
++
+ target_link_libraries(FatFs_SPI INTERFACE
+         hardware_spi
+         hardware_dma
