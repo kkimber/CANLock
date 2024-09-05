@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['pbuf_5fdebug_979',['PBUF_DEBUG',['../lwipopts_8h.html#a5c3d44a0ec3bb8bd66f776c70d5c6a6c',1,'lwipopts.h']]],
-  ['pbuf_5fpool_5fsize_980',['PBUF_POOL_SIZE',['../lwipopts_8h.html#a50eaadc4cad0716410332691e382c38a',1,'lwipopts.h']]],
-  ['poly_981',['POLY',['../CBUSLongMessage_8cpp.html#aa55bbb692b1c5e89d3a5c3bee1ce8399',1,'CBUSLongMessage.cpp']]],
-  ['ppp_5fdebug_982',['PPP_DEBUG',['../lwipopts_8h.html#a171a601fe1dedb676b3e7b11fb05ec72',1,'lwipopts.h']]]
+  ['netif_5fdebug_1010',['NETIF_DEBUG',['../lwipopts_8h.html#a2dfad02b075a7f9a8791a66fe40864a4',1,'lwipopts.h']]],
+  ['no_5fsys_1011',['NO_SYS',['../lwipopts_8h.html#ae00ba99de94a5bf84d832be8976df59b',1,'lwipopts.h']]],
+  ['num_5fex_5fcontexts_1012',['NUM_EX_CONTEXTS',['../CBUS_8h.html#a6f46ab1bb4a2e87ccfe8047a6bfe9be1',1,'CBUS.h']]]
 ];

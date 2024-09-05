@@ -23,6 +23,7 @@ var classCBUSbase =
     [ "doRqnp", "classCBUSbase.html#a5f442250e75b034993cb9f36685e8db6", null ],
     [ "doRqnpn", "classCBUSbase.html#a99a9c4ef6313a58123d833676bcaac8f", null ],
     [ "doSnn", "classCBUSbase.html#a855dafb3906d71ef2d90325941461b93", null ],
+    [ "FLiMSWCheck", "classCBUSbase.html#ae0a3f0563f38824161434179bf598260", null ],
     [ "getCANID", "classCBUSbase.html#ab0580c1201ec323b86d72fafcaa41a6a", null ],
     [ "getCBUSGreenLED", "classCBUSbase.html#a761fb962a0936c8362b37d3cb88f2565", null ],
     [ "getCBUSSwitch", "classCBUSbase.html#a01864f1fbcab0b781aa04209ebae7c4a", null ],
@@ -30,7 +31,7 @@ var classCBUSbase =
     [ "getNextMessage", "classCBUSbase.html#aeaf97942841d8fbf8ea77af7ddc7641b", null ],
     [ "getParFlags", "classCBUSbase.html#aa5768b5d0f5514a3146ce84a4300212c", null ],
     [ "indicateFLiMMode", "classCBUSbase.html#afa23086a95998477a18d4430b6e47db3", null ],
-    [ "indicateMode", "classCBUSbase.html#a50d1d1caf8ba23893f0e2f8148a3232b", null ],
+    [ "indicateModeOnLEDs", "classCBUSbase.html#a952f0f3c7773d03b41ae6ee42a2bfa52", null ],
     [ "initFLiM", "classCBUSbase.html#af2d0ea4eb44939fa30b04e2690d1dec7", null ],
     [ "isExt", "classCBUSbase.html#a8a59691ff08b099b9c3375c0d22de899", null ],
     [ "isRTR", "classCBUSbase.html#ae375971b427d9353329ec57fc85d61e9", null ],
@@ -77,6 +78,7 @@ var classCBUSbase =
     [ "m_coeObj", "classCBUSbase.html#a29cc20950c24a2816811c9a511fa25e4", null ],
     [ "m_enumResponses", "classCBUSbase.html#a84d910998fb771c2db5e80de810bee66", null ],
     [ "m_eventNumber", "classCBUSbase.html#a167510df4ab12726e873d8cf1162df17", null ],
+    [ "m_flimState", "classCBUSbase.html#a1753c833326fc7cc3b81c1d27d65e12a", null ],
     [ "m_gcServer", "classCBUSbase.html#ae226587fe50b1216d699d01c238ad4b6", null ],
     [ "m_ledGrn", "classCBUSbase.html#a7305b3f0e22c40e054ce1e663678275a", null ],
     [ "m_ledYlw", "classCBUSbase.html#a2945e6b7b9849bead22a9fc9537f007b", null ],
@@ -88,6 +90,6 @@ var classCBUSbase =
     [ "m_opcodes", "classCBUSbase.html#a1dc6d35340b1efcda73a5619e78a0230", null ],
     [ "m_pModuleName", "classCBUSbase.html#a1696954805ed49b278f0b43d4ed8edc7", null ],
     [ "m_pModuleParams", "classCBUSbase.html#a7ef5f83902b73e975f73c838b3eae2f6", null ],
-    [ "m_sw", "classCBUSbase.html#ad2fa72027547d6e1aeb65c6f2d24a63e", null ],
-    [ "timeOutTimer", "classCBUSbase.html#aa02099f3a1cb635afca90faa06b2a6da", null ]
+    [ "m_prevFlimState", "classCBUSbase.html#a727bcf249274f972686241b026041cb3", null ],
+    [ "m_sw", "classCBUSbase.html#ad2fa72027547d6e1aeb65c6f2d24a63e", null ]
 ];

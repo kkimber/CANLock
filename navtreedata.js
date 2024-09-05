@@ -69,8 +69,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "ACAN2040_8cpp.html",
-"classCBUSConfig.html#acee42ccaa317e13ce3ef420c362c1980",
-"functions_~.html"
+"classCBUSConfig.html#a90e99dfacf163a966cc13625b3e55e1d",
+"functions_func_~.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
