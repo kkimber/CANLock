@@ -42,7 +42,7 @@ jobs:
 
     - name: Use PICO SDK 1.5.1
       working-directory: ${{github.workspace}}/pico-sdk
-      run: git switch --detach 1.5.1
+      run: git switch --detach "1.5.1"
 
     - name: Apply FatFsPicoSPI patch
       working-directory: ${{github.workspace}}/src/FatFsPicoSPI
