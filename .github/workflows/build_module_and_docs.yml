@@ -31,6 +31,7 @@ jobs:
       with:
         repository: raspberrypi/pico-sdk
         path: pico-sdk  
+        fetch-depth: 0
 
     - name: Checkout Submodules
       working-directory: ${{github.workspace}}
