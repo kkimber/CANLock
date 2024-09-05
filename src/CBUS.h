@@ -50,12 +50,17 @@
 
 #include <cbusdefs.h>
 
-#define SW_TR_HOLD 6000U                  ///< CBUS push button hold time for SLiM/FLiM transition in millis = 6 seconds
 #define DEFAULT_PRIORITY 0xB              ///< default CBUS messages priority. 1011 = 2|3 = normal/low
 #define LONG_MESSAGE_DEFAULT_DELAY 20     ///< delay in milliseconds between sending successive long message fragments
 #define LONG_MESSAGE_RECEIVE_TIMEOUT 5000 ///< timeout waiting for next long message packet
 #define NUM_EX_CONTEXTS 4                 ///< number of send and receive contexts for extended implementation = number of concurrent messages
 #define EX_BUFFER_LEN 64                  ///< size of extended send and receive buffers
+
+// FLiM timing from PIC libraries
+#define ONE_SECOND 1000U
+#define HUNDRED_MILI_SECOND 100U
+#define FLiM_DEBOUNCE_TIME HUNDRED_MILI_SECOND
+#define FLiM_HOLD_TIME  4 * ONE_SECOND
 
 //
 /// Enumeration of CBUS modes
@@ -66,6 +71,25 @@ enum
    MODE_SLIM = 0,    ///< Module is in SLiM mode
    MODE_FLIM = 1,    ///< Module is in FLiM mode
    MODE_CHANGING = 2 ///< Module mode is in the process of being changed
+};
+
+//
+/// Enumeration of FLiM modes
+//
+
+enum class fsState
+{
+   fsSLiM,          ///< Module is in SLiM mode
+   fsFLiM,          ///< Module is in FLiM mode
+   fsPressed,       ///< FLiM button is pressed
+   fsFlashing,      ///< FLiM LED is flashing
+   fsFLiMSetup,     ///< Module is in FLiM setup mode
+   fsFLiMRelease,   ///< FLiM button is released
+   fsSetupDone,     ///< FLiM setup is complete
+   fsFLiMLearn,     ///< Module in FLiM learn mode
+   fsPressedFLiM,   ///< FLiM button pressed while in FLiM
+   fsPressedSetup,  ///< FLiM button pressed while in FLiM setup
+   fsUnknown        ///< Unknown FLiM mode
 };
 
 //
@@ -133,6 +157,7 @@ public:
 
    // implementations of these methods are provided in the base class
 
+   void FLiMSWCheck(void);
    bool sendSingleOpc(const uint8_t opc);
    bool sendOpcMyNN(const uint8_t opc, const uint8_t dataLen=0, const uint8_t d1=0, const uint8_t d2=0, const uint8_t d3=0, const uint8_t d4=0, const uint8_t d5=0);
    bool sendOpcNN(const uint8_t opc, const uint16_t nodeId, const uint8_t dataLen=0, const uint8_t d1=0, const uint8_t d2=0, const uint8_t d3=0, const uint8_t d4=0, const uint8_t d5=0);
@@ -157,7 +182,7 @@ public:
    void setParams(cbusparam_t *mparams);
    void setName(module_name_t *moduleName);
    void checkCANenum(void);
-   void indicateMode(uint8_t mode);
+   void indicateModeOnLEDs(uint8_t mode);
    void indicateFLiMMode(bool bFLiM);
    void setEventHandlerCB(eventCallback_t evCallback);
    void setEventHandlerExCB(eventExCallback_t evExCallback);
@@ -224,9 +249,11 @@ protected: // protected members become private in derived classes
    bool m_bThisNN;
    uint16_t m_nodeNumber;
    uint16_t m_eventNumber;
-   uint32_t timeOutTimer;
    uint32_t CANenumTime;
    bool m_bEnumerationRequired;
+
+   fsState m_flimState;
+   fsState m_prevFlimState;
 
    CBUSLongMessage *longMessageHandler; // CBUS long message object to receive relevant frames
    CBUSGridConnect *m_gcServer;         // CBUS grid connect server

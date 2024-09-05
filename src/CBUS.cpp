@@ -76,9 +76,10 @@ CBUSbase::CBUSbase(CBUSConfig &config) : m_numMsgsSent{0x0L},
                                          m_bThisNN{false},
                                          m_nodeNumber{0x0U},
                                          m_eventNumber{0x0U},
-                                         timeOutTimer{0x0UL},
                                          CANenumTime{0x0UL},
                                          m_bEnumerationRequired{false},
+                                         m_flimState{fsState::fsUnknown},
+                                         m_prevFlimState{fsState::fsUnknown},
                                          longMessageHandler{nullptr},
                                          m_gcServer{nullptr},
                                          m_coeObj{nullptr}
@@ -152,6 +153,122 @@ void CBUSbase::setSLiM()
 inline uint8_t CBUSbase::getCANID(uint32_t header)
 {
    return header & 0x7f;
+}
+
+///
+/// Monitor the FLiM switch and process FLiM state machine actions
+/// 
+
+void CBUSbase::FLiMSWCheck(void)
+{
+   switch(m_flimState)
+   {
+      case fsState::fsFLiM:
+      case fsState::fsSLiM:
+         // FLiM button pressed in FLiM or SLiM
+         if (m_sw.isPressed())
+         {
+            m_prevFlimState = m_flimState;
+            m_flimState = fsState::fsPressed;
+
+            // @todo Node ID needs to be set ???
+         }
+         break;
+
+      case fsState::fsPressed:
+         // Is the FLiM button still pressed?
+         if (m_sw.isPressed())
+         {
+            // Yes - Check for button hold duration exceeding FLiM setup time
+            if (m_sw.getCurrentStateDuration() > FLiM_HOLD_TIME)
+            {
+               // Held long enough, so start FLiM LED flashing, user can then release button
+               m_flimState = fsState::fsFlashing;
+
+               // Set LED flashing
+               indicateModeOnLEDs(MODE_CHANGING);
+            }
+         }
+         else if ((m_prevFlimState == fsState::fsFLiM) && (m_sw.getLastStateDuration() > FLiM_DEBOUNCE_TIME)) 
+         {
+            // Buton was held long enough to enter FLiM setup from FLiM
+            m_flimState = fsState::fsFLiMSetup;
+
+            // Init FLiM setup mode
+            initFLiM();
+         }
+         else
+         {
+            // Button not held long enough for FLiM setup, return to previous state
+            m_flimState = m_prevFlimState;
+         }
+         break;
+
+      case fsState::fsFlashing: // LEDs flashing indicate mode is changing
+         
+         if (!m_sw.isPressed())
+         {
+            // FLiM button released
+            if (m_prevFlimState == fsState::fsSLiM)
+            {
+               // from SLiM, enter FLiM setup
+               m_flimState = fsState::fsFLiMSetup;
+
+               // Init FLiM setup mode
+               initFLiM();
+            }
+            else
+            {
+               // from FLiM, revert to SLiM
+               m_flimState = fsState::fsSLiM;
+
+               revertSLiM();
+            }
+         }
+         break;
+
+      case fsState::fsFLiMSetup:  // Button pressed whilst in setup mode
+         if (m_sw.isPressed()) 
+         {
+               m_flimState = fsState::fsPressedSetup; 
+               // Wait for debounce before taking action
+         }
+         break;
+         
+      case fsState::fsPressedSetup: // Button was pressed whilst in setup mode
+         if (m_sw.isPressed()) 
+         {
+               if (m_sw.getCurrentStateDuration() > FLiM_DEBOUNCE_TIME)  // button released after debounce time
+               {
+                  m_flimState = m_prevFlimState;
+
+                  if (m_flimState == fsState::fsFLiM)
+                  {
+                     indicateModeOnLEDs(MODE_FLIM);
+                  }
+                  else
+                  {
+                     indicateModeOnLEDs(MODE_SLIM);
+                  }
+               } 
+               else
+               {
+                  m_flimState = fsState::fsFLiMSetup;
+               }
+         }
+         break;
+
+         // TBD
+         case fsState::fsFLiMRelease:
+         case fsState::fsFLiMLearn:
+         case fsState::fsSetupDone:
+         case fsState::fsPressedFLiM:
+         case fsState::fsUnknown:
+         //default:
+            // Should not get here, but if we do revert to SLiM
+            revertSLiM();
+            break;
+   }
 }
 
 ///
@@ -453,10 +570,9 @@ void CBUSbase::CANenumeration()
 //
 void CBUSbase::initFLiM()
 {
-   indicateMode(MODE_CHANGING);
+   indicateModeOnLEDs(MODE_CHANGING);
 
    m_bModeChanging = true;
-   timeOutTimer = SystemTick::GetMilli();
 
    // send RQNN message with current NN, which may be zero if a virgin/SLiM node
    sendOpcMyNN(OPC_RQNN);
@@ -485,8 +601,10 @@ void CBUSbase::renegotiate()
 //
 /// set the CBUS LEDs to indicate the current mode
 //
-void CBUSbase::indicateMode(uint8_t mode)
+void CBUSbase::indicateModeOnLEDs(uint8_t mode)
 {
+   bool bInFLiM = m_moduleConfig.getFLiM();
+
    switch (mode)
    {
    case MODE_FLIM:
@@ -501,7 +619,7 @@ void CBUSbase::indicateMode(uint8_t mode)
 
    case MODE_CHANGING:
       m_ledYlw.blink();
-      m_ledGrn.off();
+      bInFLiM ? m_ledGrn.off() : m_ledGrn.on();
       break;
 
    default:
@@ -511,7 +629,17 @@ void CBUSbase::indicateMode(uint8_t mode)
 
 void CBUSbase::indicateFLiMMode(bool bFLiM)
 {
-   indicateMode(bFLiM ? MODE_FLIM : MODE_SLIM);
+   // Set initial FLiM state from persistent storage
+   if (bFLiM)
+   {
+      m_flimState = fsState::fsFLiM;
+   }
+   else
+   {
+      m_flimState = fsState::fsSLiM;
+   }
+
+   indicateModeOnLEDs(bFLiM ? MODE_FLIM : MODE_SLIM);
 }
 
 //
@@ -539,58 +667,8 @@ void CBUSbase::process(uint8_t num_messages)
    // allow the CBUS switch some processing time
    m_sw.run();
 
-   //
-   /// use LEDs to indicate that the user can release the switch
-   //
-
-   if (m_sw.isPressed() && m_sw.getCurrentStateDuration() > SW_TR_HOLD)
-   {
-      indicateMode(MODE_CHANGING);
-   }
-
-   //
-   /// handle switch state changes
-   //
-
-   if (m_sw.stateChanged())
-   {
-      // has switch been released ?
-      if (!m_sw.isPressed())
-      {
-         // how long was it pressed for ?
-         uint32_t press_time = m_sw.getLastStateDuration();
-
-         // long hold > 6 secs
-         if (press_time > SW_TR_HOLD)
-         {
-            // initiate mode change
-            if (!m_moduleConfig.getFLiM())
-            {
-               initFLiM();
-            }
-            else
-            {
-               revertSLiM();
-            }
-         }
-
-         // short 1-2 secs
-         if (press_time >= 1000 && press_time < 2000)
-         {
-            renegotiate();
-         }
-
-         // very short < 0.5 sec
-         if (press_time < 500 && m_moduleConfig.getFLiM())
-         {
-            CANenumeration();
-         }
-      }
-      else
-      {
-         // do any switch release processing here
-      }
-   }
+   // Process FLiM switch and state machine
+   FLiMSWCheck();
 
    // get received CAN frames from buffer
    // process by default 3 messages per run so the user's application code doesn't appear unresponsive under load
@@ -603,34 +681,44 @@ void CBUSbase::process(uint8_t num_messages)
          && mcount < num_messages)                             // Limit messages processed per run
    {
       ++mcount;
-
-      // at least one CAN frame is available in either the reception buffer or the COE buffer
-      // retrieve the next one
-
+      msg = {};
       bool bOwnEvent = false;
 
-      if (m_gcServer != nullptr && m_gcServer->available())
-      {
-         // Process message received from Grid Connect
-         msg = m_gcServer->get();
-      }
-      else if (m_coeObj != nullptr && m_coeObj->available())
+      // At least one CAN frame is available, either from CAN, GridConnect or an internal event
+
+      // Check for message on COE queue
+      if (m_coeObj != nullptr && m_coeObj->available())
       {
          msg = m_coeObj->get();
          
          // Flag this is from us, so we don't trigger enumeration
          bOwnEvent = true;
       }
-      else
+      // Check for message on GridConnect
+      else if (m_gcServer != nullptr && m_gcServer->available())
       {
-         // Check if we should be able to send on TCP before removing frame from FIFO
-         if (m_gcServer->canSend())
+         msg = m_gcServer->get();
+      }
+      // Check for message on CAN
+      else if (available())
+      {
+         // Flag to indicate if we can pull from the FIFO
+         bool bCanGet = true;
+
+         // Check if we can forward on Grid Connect (if we have a GC server)
+         if (m_gcServer != nullptr)
          {
-            // Process message received off CAN
+            bCanGet = m_gcServer->canSend();
+         }
+
+         // Can we pull from the FIFO (can we send on GC server, if we have one)
+         if (bCanGet)
+         {
+            // Pull from the FIFO
             msg = getNextMessage();
 
-            // Forward all received CAN messages to GridConnect clients
-            if (m_gcServer)
+            // Forward on GridConnect
+            if (m_gcServer != nullptr)
             {
                // Indicate if we have more data to send immediately
                m_gcServer->sendCANFrame(msg, available());
@@ -638,9 +726,15 @@ void CBUSbase::process(uint8_t num_messages)
          }
          else
          {
-            // No memory to send on TCP, so delay sending, leave frame in FIFO
+            // Cannot retrieve off CAN at this time, as we cannot send on GC
+            // Leave the frame in the CAN FIFO
             continue;
          }
+      }
+      else
+      {
+         // Shouldn't really get here, no message to process
+         continue;
       }
 
       // extract OPC and node number
@@ -740,16 +834,6 @@ void CBUSbase::process(uint8_t num_messages)
 
    // check CAN bus enumeration timer
    checkCANenum();
-
-   //
-   /// check 30 sec timeout for SLiM/FLiM negotiation with FCU
-   //
-
-   if (m_bModeChanging && ((SystemTick::GetMilli() - timeOutTimer) >= 30000))
-   {
-      indicateFLiMMode(m_moduleConfig.getFLiM());
-      m_bModeChanging = false;
-   }
 
    //
    /// end of CBUS message processing
@@ -1122,7 +1206,7 @@ bool CBUSbase::parseFLiMCmd(CANFrame &msg)
    // In setup mode, also check for FLiM commands not addressed to
    // any particular node
 
-   if ((!cmdProcessed) && (m_bModeChanging))
+   if ((!cmdProcessed) && (m_flimState == fsState::fsFLiMSetup))
    {
       cmdProcessed = true;
 
