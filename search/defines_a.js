@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['one_5fsecond_1013',['ONE_SECOND',['../CBUS_8h.html#ac93edbf7e8fdbf7398453d51bbd37a97',1,'CBUS.h']]]
+  ['one_5fsecond_1024',['ONE_SECOND',['../CBUS_8h.html#ac93edbf7e8fdbf7398453d51bbd37a97',1,'CBUS.h']]]
 ];

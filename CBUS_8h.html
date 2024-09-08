@@ -196,6 +196,14 @@ Macros</h2></td></tr>
 <tr class="separator:acb4cf25ef41e96a58a2338968488714c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad151495477026b8b2d88a7a3a568c545"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CBUS_8h.html#ad151495477026b8b2d88a7a3a568c545">FLiM_HOLD_TIME</a>&#160;&#160;&#160;4 * <a class="el" href="CBUS_8h.html#ac93edbf7e8fdbf7398453d51bbd37a97">ONE_SECOND</a></td></tr>
 <tr class="separator:ad151495477026b8b2d88a7a3a568c545"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea008ce0c0245ed39562ab6710c33304"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CBUS_8h.html#aea008ce0c0245ed39562ab6710c33304">MAX_CANID</a>&#160;&#160;&#160;0x7F</td></tr>
+<tr class="separator:aea008ce0c0245ed39562ab6710c33304"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6fabdad5b08944e7ec8ccb98a8febcf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CBUS_8h.html#ad6fabdad5b08944e7ec8ccb98a8febcf">ENUM_ARRAY_SIZE</a>&#160;&#160;&#160;(<a class="el" href="CBUS_8h.html#aea008ce0c0245ed39562ab6710c33304">MAX_CANID</a> / 8) + 1</td></tr>
+<tr class="separator:ad6fabdad5b08944e7ec8ccb98a8febcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11f43a49a8f7e14cef3ddc69baf10153"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CBUS_8h.html#a11f43a49a8f7e14cef3ddc69baf10153">ENUMERATION_TIMEOUT</a>&#160;&#160;&#160;<a class="el" href="CBUS_8h.html#a795d19057b24de06131d25249431afb6">HUNDRED_MILI_SECOND</a></td></tr>
+<tr class="separator:a11f43a49a8f7e14cef3ddc69baf10153"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabc5c9ad540bf9ebad39f0db93725929"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CBUS_8h.html#aabc5c9ad540bf9ebad39f0db93725929">ENUMERATION_HOLDOFF</a>&#160;&#160;&#160;2 * <a class="el" href="CBUS_8h.html#a795d19057b24de06131d25249431afb6">HUNDRED_MILI_SECOND</a></td></tr>
+<tr class="separator:aabc5c9ad540bf9ebad39f0db93725929"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -449,6 +457,48 @@ send_stream_id</td>
 
 </div>
 </div>
+<a id="ad6fabdad5b08944e7ec8ccb98a8febcf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6fabdad5b08944e7ec8ccb98a8febcf">&#9670;&nbsp;</a></span>ENUM_ARRAY_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ENUM_ARRAY_SIZE&#160;&#160;&#160;(<a class="el" href="CBUS_8h.html#aea008ce0c0245ed39562ab6710c33304">MAX_CANID</a> / 8) + 1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aabc5c9ad540bf9ebad39f0db93725929"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabc5c9ad540bf9ebad39f0db93725929">&#9670;&nbsp;</a></span>ENUMERATION_HOLDOFF</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ENUMERATION_HOLDOFF&#160;&#160;&#160;2 * <a class="el" href="CBUS_8h.html#a795d19057b24de06131d25249431afb6">HUNDRED_MILI_SECOND</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a11f43a49a8f7e14cef3ddc69baf10153"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11f43a49a8f7e14cef3ddc69baf10153">&#9670;&nbsp;</a></span>ENUMERATION_TIMEOUT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ENUMERATION_TIMEOUT&#160;&#160;&#160;<a class="el" href="CBUS_8h.html#a795d19057b24de06131d25249431afb6">HUNDRED_MILI_SECOND</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aa4ab80178bfb7c9b9ad8e2c251482fd2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa4ab80178bfb7c9b9ad8e2c251482fd2">&#9670;&nbsp;</a></span>EX_BUFFER_LEN</h2>
 
@@ -536,6 +586,20 @@ send_stream_id</td>
 </div><div class="memdoc">
 
 <p>timeout waiting for next long message packet </p>
+
+</div>
+</div>
+<a id="aea008ce0c0245ed39562ab6710c33304"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea008ce0c0245ed39562ab6710c33304">&#9670;&nbsp;</a></span>MAX_CANID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_CANID&#160;&#160;&#160;0x7F</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
