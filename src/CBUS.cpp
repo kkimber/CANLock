@@ -70,14 +70,14 @@ CBUSbase::CBUSbase(CBUSConfig &config) : m_numMsgsSent{0x0L},
                                          m_opcodes{nullptr},
                                          m_numOpcodes{0x0U},
                                          m_enumResponses{},
-                                         m_bModeChanging{false},
-                                         m_bCANenum{false},
                                          m_bLearn{false},
                                          m_bThisNN{false},
                                          m_nodeNumber{0x0U},
                                          m_eventNumber{0x0U},
-                                         CANenumTime{0x0UL},
+                                         m_enumStartTime{0x0UL},
                                          m_bEnumerationRequired{false},
+                                         m_bEnumerationInProgress{false},
+                                         m_bResultRequired{false},
                                          m_flimState{fsState::fsUnknown},
                                          m_prevFlimState{fsState::fsUnknown},
                                          longMessageHandler{nullptr},
@@ -138,10 +138,9 @@ void CBUSbase::setName(module_name_t *moduleName)
 
 void CBUSbase::setSLiM()
 {
-   m_bModeChanging = false;
    m_moduleConfig.setNodeNum(0);
    m_moduleConfig.setFLiM(false);
-   m_moduleConfig.setCANID(0);
+   m_moduleConfig.setCANID(1); /// @todo check - why change the node ID
 
    indicateFLiMMode(m_moduleConfig.getFLiM());
 }
@@ -170,8 +169,6 @@ void CBUSbase::FLiMSWCheck(void)
          {
             m_prevFlimState = m_flimState;
             m_flimState = fsState::fsPressed;
-
-            // @todo Node ID needs to be set ???
          }
          break;
 
@@ -191,7 +188,7 @@ void CBUSbase::FLiMSWCheck(void)
          }
          else if ((m_prevFlimState == fsState::fsFLiM) && (m_sw.getLastStateDuration() > FLiM_DEBOUNCE_TIME)) 
          {
-            // Buton was held long enough to enter FLiM setup from FLiM
+            // Short press in FLiM mode, request FLiM setup
             m_flimState = fsState::fsFLiMSetup;
 
             // Init FLiM setup mode
@@ -547,32 +544,11 @@ bool CBUSbase::isRTR(const CANFrame &amsg) const
 }
 
 //
-/// if in FLiM mode, initiate a CAN ID enumeration cycle
-//
-
-void CBUSbase::CANenumeration()
-{
-   // initiate CAN bus enumeration cycle, either due to ENUM opcode, ID clash, or user button press
-   CANFrame msg;
-
-   // set global variables
-   m_bCANenum = true;                    // we are enumerating
-   CANenumTime = SystemTick::GetMilli(); // the cycle start time
-   memset(m_enumResponses, 0, sizeof(m_enumResponses));
-
-   // send zero-length RTR frame
-   msg.len = 0;
-   sendMessage(msg, true, false); // fixed arg order in v 1.1.4, RTR - true, ext = false
-}
-
-//
 /// initiate the transition from SLiM to FLiM mode
 //
 void CBUSbase::initFLiM()
 {
    indicateModeOnLEDs(MODE_CHANGING);
-
-   m_bModeChanging = true;
 
    // send RQNN message with current NN, which may be zero if a virgin/SLiM node
    sendOpcMyNN(OPC_RQNN);
@@ -649,13 +625,6 @@ void CBUSbase::process(uint8_t num_messages)
 {
    CANFrame msg;
 
-   // start bus enumeration if required
-   if (m_bEnumerationRequired)
-   {
-      m_bEnumerationRequired = false;
-      CANenumeration();
-   }
-
    //
    // process FLiM UI
    //
@@ -670,6 +639,9 @@ void CBUSbase::process(uint8_t num_messages)
    // Process FLiM switch and state machine
    FLiMSWCheck();
 
+   // Process CAN ID self-enumeration
+   processEnumeration();
+
    // get received CAN frames from buffer
    // process by default 3 messages per run so the user's application code doesn't appear unresponsive under load
 
@@ -681,8 +653,7 @@ void CBUSbase::process(uint8_t num_messages)
          && mcount < num_messages)                             // Limit messages processed per run
    {
       ++mcount;
-      msg = {};
-      bool bOwnEvent = false;
+      msg = {}; // Clear msg buffer
 
       // At least one CAN frame is available, either from CAN, GridConnect or an internal event
 
@@ -690,9 +661,6 @@ void CBUSbase::process(uint8_t num_messages)
       if (m_coeObj != nullptr && m_coeObj->available())
       {
          msg = m_coeObj->get();
-         
-         // Flag this is from us, so we don't trigger enumeration
-         bOwnEvent = true;
       }
       // Check for message on GridConnect
       else if (m_gcServer != nullptr && m_gcServer->available())
@@ -702,7 +670,7 @@ void CBUSbase::process(uint8_t num_messages)
       // Check for message on CAN
       else if (available())
       {
-         // Flag to indicate if we can pull from the FIFO
+         // Flag to indicate if we can pull from the FIFO at this time
          bool bCanGet = true;
 
          // Check if we can forward on Grid Connect (if we have a GC server)
@@ -774,45 +742,6 @@ void CBUSbase::process(uint8_t num_messages)
          }
       }
 
-      // is this a CANID() enumeration request from another node (RTR set) ?
-      if (msg.rtr)
-      {
-         // send an empty message to show our CANID()
-         msg.len = 0;
-         sendMessage(msg);
-         continue;
-      }
-
-      //
-      /// Set flag if we find a CANID() conflict with the frame's producer from another module
-      /// i.e. not from our own consumed events!
-      /// Doesn't apply to RTR or zero-length frames, so as not to trigger an enumeration loop
-      //
-
-      if (!bOwnEvent && (remoteCANID == m_moduleConfig.getCANID()) && (msg.len > 0))
-      {
-         m_bEnumerationRequired = true;
-      }
-
-      // is this an extended frame ? we currently ignore these as bootloader, etc data may confuse us !
-      if (msg.ext)
-      {
-         continue;
-      }
-
-      // are we enumerating CANID()s ?
-      if (m_bCANenum && msg.len == 0)
-      {
-         // store this response in the responses array
-         if (remoteCANID > 0)
-         {
-            // fix to correctly record the received CANID()
-            bitWrite(m_enumResponses[(remoteCANID / 16)], remoteCANID % 8, 1);
-         }
-
-         continue;
-      }
-
       // Parse and process CBUS messages
       bool bConsumed = parseCBUSMsg(msg);
 
@@ -832,71 +761,9 @@ void CBUSbase::process(uint8_t num_messages)
 
    } // while messages available
 
-   // check CAN bus enumeration timer
-   checkCANenum();
-
    //
    /// end of CBUS message processing
    //
-}
-
-void CBUSbase::checkCANenum()
-{
-   //
-   /// check the 100ms CAN enumeration cycle timer
-   //
-
-   uint8_t selected_id = 1; // default if no responses from other modules
-
-   // if (bCANenum && !bCANenumComplete && (SystemTick::GetMilli() - CANenumTime) >= 100) {
-   if (m_bCANenum && (SystemTick::GetMilli() - CANenumTime) >= 100)
-   {
-      // enumeration timer has expired -- stop enumeration and process the responses
-
-      // iterate through the 128 bit field
-      for (int_fast8_t i = 0; i < 16; i++)
-      {
-
-         // ignore if this uint8_t is all 1's -> there are no unused IDs in this group of numbers
-         if (m_enumResponses[i] == 0xff)
-         {
-            continue;
-         }
-
-         // for each bit in the uint8_t
-         for (int_fast8_t b = 0; b < 8; b++)
-         {
-
-            // ignore first bit of first uint8_t -- CAN ID zero is not used for nodes
-            if (i == 0 && b == 0)
-            {
-               continue;
-            }
-
-            // if the bit is not set
-            if (bitRead(m_enumResponses[i], b) == 0)
-            {
-               selected_id = ((i * 16) + b);
-
-               // i = 16; // ugh ... but probably better than a goto :)
-               // but using a goto saves 4 bytes of program size ;)
-               goto check_done;
-            }
-         }
-      }
-
-   check_done:
-
-      // bCANenumComplete = true;
-      m_bCANenum = false;
-      CANenumTime = 0UL;
-
-      // store the new CAN ID
-      m_moduleConfig.setCANID(selected_id);
-
-      // send NNACK
-      sendOpcMyNN(OPC_NNACK);
-   }
 }
 
 //
@@ -1156,14 +1023,14 @@ bool CBUSbase::parseFLiMCmd(CANFrame &msg)
 #endif
 
       case OPC_CANID:
-         //    if (!setNewCanId(msg.data[3]))
+         if (!m_moduleConfig.setCANID(msg.data[3]))
          {
             sendCMDERR(CMDERR_INVALID_EVENT); // seems a strange error code but that's what the spec says...
          }
          break;
 
       case OPC_ENUM:
-         //     doEnum(true);
+         doEnum(true);
          break;
 
       default:
@@ -1396,12 +1263,8 @@ void CBUSbase::doSnn()
    m_moduleConfig.setNodeNum(m_nodeNumber);
 
    // we are now in FLiM mode - update the configuration
-   m_bModeChanging = false;
    m_moduleConfig.setFLiM(true);
    indicateFLiMMode(m_moduleConfig.getFLiM());
-
-   // enumerate the CAN bus to allocate a free CAN ID
-   CANenumeration(); /// @todo checkif this is needed here
 
    /// @todo rebuild hash??
 
@@ -1721,6 +1584,154 @@ void CBUSbase::makeHeader(CANFrame &msg, uint8_t priority)
 void makeHeader_impl(CANFrame &msg, uint8_t id, uint8_t priority)
 {
    msg.id = (priority << 7) + (id & 0x7f);
+}
+
+//
+/// Check incoming frame to determine if CAN ID self-enumeration is required
+/// 
+/// @param msg Reference to the incoming frame
+///
+bool CBUSbase::checkIncomingFrame(CANFrame &msg)
+{
+   bool bMsgFound;
+
+   bMsgFound = false;
+
+   // Are we in self-enumeration?
+   if (m_bEnumerationInProgress)
+   {
+      // Set bit in response array for CAN ID of received message
+      bitWrite(m_enumResponses[(msg.id / 16)], msg.id % 8, 1);
+   }
+   // Does the CAN ID of the incoming frame match ours
+   else if (!m_bEnumerationRequired && (msg.id == m_moduleConfig.getCANID()))
+   {
+      // Yes, we received a packet with our own canid, initiate enumeration as automatic conflict resolution
+      // we know enumerationInProgress = false here
+      doEnum(false);
+
+      // Start hold off time for self enumeration - start after 200ms delay
+      m_enumStartTime = SystemTick::GetMilli();
+   }
+
+   // Check for RTR - self enumeration request from another module
+
+   if (msg.rtr) // RTR bit set?
+   {
+      // Yes, send enumeration response - a zero length frame with our own CAN ID
+      msg.len = 0;
+      sendMessage(msg);
+
+      // re-Start hold off time for self enumeration
+      m_enumStartTime = SystemTick::GetMilli();
+   }
+   else
+   {
+      // Ignore any EXT frames (e.g. bootloader)
+      if (!msg.ext)
+      {
+         // Valid messages have non zero payloads
+         bMsgFound = msg.len > 0;
+
+         // Limit buffer size to 8 bytes
+         if (msg.len > 8)
+         {
+            msg.len = 8; 
+         }
+      }
+   }
+
+   return (bMsgFound);
+}
+
+//
+/// Initiate CAN ID Enumeration
+//
+
+void CBUSbase::doEnum(bool bSendResult)
+{
+   m_bResultRequired = bSendResult;
+
+   if (!m_bEnumerationInProgress)
+   {
+      m_bEnumerationRequired = true;
+   }
+}
+
+//
+/// Process CAN ID Self-Enumeration
+//
+
+void CBUSbase::processEnumeration(void)
+{
+   // Is CAN Self-Enumeration initiation required?
+   if ((m_bEnumerationRequired) && ((SystemTick::GetMilli() - m_enumStartTime) >  ENUMERATION_HOLDOFF))
+   {
+      // Initialize response array
+      for (int_fast8_t i=1; i< ENUM_ARRAY_SIZE; i++)
+      {
+         m_enumResponses[i] = 0U;
+      }
+
+      // Ensure we don't allocate a CAN ID of 0
+      m_enumResponses[0] = 1;
+
+      // Setup enumeration flags
+      m_bEnumerationInProgress = true;
+      m_bEnumerationRequired = true;
+      m_enumStartTime = SystemTick::GetMilli();
+
+      // Send zero length CAN RTR frame to initiate self-enumeration
+      CANFrame msg;
+      msg.len = 0;
+      sendMessage(msg, true, false);
+   }
+   // Is Enumeration complete? - check results
+   else if ((m_bEnumerationInProgress && (SystemTick::GetMilli() - m_enumStartTime) > ENUMERATION_TIMEOUT ))
+   {
+      int_fast8_t i;
+      uint8_t enumResult;
+      uint8_t newCanId;
+
+      // Find byte in array with first free flag. Skip over 0xFF bytes (i.e all Node ID's used)
+      for (i=0; (m_enumResponses[i] == 0xFF) && (i < ENUM_ARRAY_SIZE); i++)
+      {
+         ;
+      }
+
+      // Have we found a free ID?
+      if ((enumResult = m_enumResponses[i]) != 0xFF)
+      {
+         // Bit shift through byte to search for bit to determine the Can ID
+         for (newCanId = i*8; (enumResult & 0x01); newCanId++)
+         {
+            enumResult >>= 1;
+         }
+
+         // Check validity of new ID before using it
+         if ((newCanId >= 1) && (newCanId <= 99))
+         {
+            // Assign new CAN ID
+            m_moduleConfig.setCANID(newCanId);
+
+            // If requested, send out a Node Number ACK to confirm our new ID
+            if (m_bResultRequired)
+            {
+               sendOpcMyNN(OPC_NNACK);
+            }
+         }
+      }
+      else 
+      {
+         if (m_bResultRequired)
+         {
+            sendCMDERR(CMDERR_INVALID_EVENT); // seems a strange error code but that's what the spec says...
+         }
+      }
+
+      m_bEnumerationRequired = false;
+      m_bEnumerationInProgress = false;
+   }
 }
 
 //
