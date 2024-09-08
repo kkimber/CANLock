@@ -53,10 +53,6 @@ var CBUS_8h =
       [ "fsPressed", "CBUS_8h.html#aa10fac440856d17ef723415f10e21cffa01038db35ced808e1120c494e9307fab", null ],
       [ "fsFlashing", "CBUS_8h.html#aa10fac440856d17ef723415f10e21cffa2755e7c244b0604889025609836f3fa5", null ],
       [ "fsFLiMSetup", "CBUS_8h.html#aa10fac440856d17ef723415f10e21cffa73c75e7b3ea365afb7e61332bdc4cfdb", null ],
-      [ "fsFLiMRelease", "CBUS_8h.html#aa10fac440856d17ef723415f10e21cffa4297474a01a076f0c3d60efc15757a13", null ],
-      [ "fsSetupDone", "CBUS_8h.html#aa10fac440856d17ef723415f10e21cffabbb94f85fcc1de57a4bfda1bbe2eb37a", null ],
-      [ "fsFLiMLearn", "CBUS_8h.html#aa10fac440856d17ef723415f10e21cffa5425259b845a35b4e54c853faea7cdb4", null ],
-      [ "fsPressedFLiM", "CBUS_8h.html#aa10fac440856d17ef723415f10e21cffa7dca989c974ef4d5654936323a88f3b6", null ],
       [ "fsPressedSetup", "CBUS_8h.html#aa10fac440856d17ef723415f10e21cffabd945c18bab9bd1668d168ed7ee7ad1b", null ],
       [ "fsUnknown", "CBUS_8h.html#aa10fac440856d17ef723415f10e21cffa8fb9e6e4348cd71bc79a228ab63b9562", null ]
     ] ],
