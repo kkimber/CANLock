@@ -227,41 +227,37 @@ void CBUSbase::FLiMSWCheck(void)
       case fsState::fsFLiMSetup:  // Button pressed whilst in setup mode
          if (m_sw.isPressed()) 
          {
-               m_flimState = fsState::fsPressedSetup; 
-               // Wait for debounce before taking action
+            m_flimState = fsState::fsPressedSetup; 
+            // Wait for debounce before taking action
          }
          break;
          
       case fsState::fsPressedSetup: // Button was pressed whilst in setup mode
-         if (m_sw.isPressed()) 
+         if (!m_sw.isPressed())
          {
-               if (m_sw.getCurrentStateDuration() > FLiM_DEBOUNCE_TIME)  // button released after debounce time
-               {
-                  m_flimState = m_prevFlimState;
+            // Was the button released after debounce time?
+            if (m_sw.getLastStateDuration() > FLiM_DEBOUNCE_TIME)
+            {
+               m_flimState = m_prevFlimState;
 
-                  if (m_flimState == fsState::fsFLiM)
-                  {
-                     indicateModeOnLEDs(MODE_FLIM);
-                  }
-                  else
-                  {
-                     indicateModeOnLEDs(MODE_SLIM);
-                  }
-               } 
+               if (m_flimState == fsState::fsFLiM)
+               {
+                  indicateModeOnLEDs(MODE_FLIM);
+               }
                else
                {
-                  m_flimState = fsState::fsFLiMSetup;
+                  indicateModeOnLEDs(MODE_SLIM);
                }
+            } 
+            else
+            {
+               m_flimState = fsState::fsFLiMSetup;
+            }
          }
          break;
 
-         // TBD
-         case fsState::fsFLiMRelease:
-         case fsState::fsFLiMLearn:
-         case fsState::fsSetupDone:
-         case fsState::fsPressedFLiM:
          case fsState::fsUnknown:
-         //default:
+         default:
             // Should not get here, but if we do revert to SLiM
             revertSLiM();
             break;

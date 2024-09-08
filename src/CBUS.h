@@ -91,10 +91,6 @@ enum class fsState
    fsPressed,      ///< FLiM button is pressed
    fsFlashing,     ///< FLiM LED is flashing
    fsFLiMSetup,    ///< Module is in FLiM setup mode
-   fsFLiMRelease,  ///< FLiM button is released
-   fsSetupDone,    ///< FLiM setup is complete
-   fsFLiMLearn,    ///< Module in FLiM learn mode
-   fsPressedFLiM,  ///< FLiM button pressed while in FLiM
    fsPressedSetup, ///< FLiM button pressed while in FLiM setup
    fsUnknown       ///< Unknown FLiM mode
 };
