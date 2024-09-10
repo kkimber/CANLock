@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['clientstate_821',['clientState',['../CBUSGridConnect_8h.html#aff2a698bcc6decb677f769a85de8b1b7',1,'TCPServer_t']]],
-  ['country_822',['country',['../CBUSWiFi_8h.html#a6f0608c6edf55cf9b52a52fc60b612ce',1,'config_t']]]
+  ['gcenable_213',['gcEnable',['../CBUSWiFi_8h.html#a5aa51a3dc361d174cff4a7e1d5d13917',1,'config_t']]],
+  ['gcport_214',['gcPort',['../CBUSWiFi_8h.html#ad703a44837d6c0073236b498c4e6fd7d',1,'config_t']]],
+  ['gcserver_215',['gcServer',['../CANLock_8cpp.html#a02a93e5636c0c75e685932e640bab7f8',1,'CANLock.cpp']]]
 ];

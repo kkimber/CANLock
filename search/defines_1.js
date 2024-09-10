@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['bitclear_953',['bitClear',['../CBUSUtil_8h.html#abbe843c0521806a4ab2e7cffe44769e2',1,'CBUSUtil.h']]],
-  ['bitread_954',['bitRead',['../CBUSUtil_8h.html#aff20d8c0a05ad3043afa2e4ad9ebe768',1,'CBUSUtil.h']]],
-  ['bitset_955',['bitSet',['../CBUSUtil_8h.html#a6a8195c0e930f86c6af03ba6af8b41dd',1,'CBUSUtil.h']]],
-  ['bitwrite_956',['bitWrite',['../CBUSUtil_8h.html#a42c17f59f3f9a3112d01246760067a8e',1,'CBUSUtil.h']]]
+  ['dhcp_5fdebug_249',['DHCP_DEBUG',['../lwipopts_8h.html#a97927ceecabcdb5f41735bf372a05cee',1,'lwipopts.h']]],
+  ['dhcp_5fdoes_5farp_5fcheck_250',['DHCP_DOES_ARP_CHECK',['../lwipopts_8h.html#ab2d91de7b2fce879b0a213682e1b0b69',1,'lwipopts.h']]]
 ];
