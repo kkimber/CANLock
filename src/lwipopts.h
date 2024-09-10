@@ -91,7 +91,7 @@
 #define LWIP_HTTPD 1
 #define LWIP_HTTPD_SSI 1
 #define LWIP_HTTPD_SSI_INCLUDE_TAG 0
-#define HTTPD_FSDATA_FILE "CANLock/htmldata.c"
+#define HTTPD_FSDATA_FILE "htmldata.c"
 
 #if LIB_PICO_STDIO_SEMIHOSTING
 // Debug LwIP options

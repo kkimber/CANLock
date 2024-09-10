@@ -1,7 +1,7 @@
 set(CAN2040_SOURCE can2040/src)
 set(CBUSDEFS cbusdefs)
+set(CBUSPICOLIB CBUSPicoLib)
 set(INIH inih)
-set(CANLOCK CANLock)
 
 add_subdirectory(FatFsPicoSPI/FatFs_SPI build)
 
@@ -9,28 +9,30 @@ add_executable(CANLock
    # Source for CAN2040 PIO based CAN controller
    ${CAN2040_SOURCE}/can2040.c
    # Sources for CBUSPico libary 
-   CBUSLED.cpp
-   CBUSSwitch.cpp
-   CBUSConfig.cpp
-   CBUSParams.cpp
-   SystemTick.cpp
-   CBUSCircularBuffer.cpp
-   CBUSLongMessage.cpp
-   CBUSGridConnect.cpp
-   CBUS.cpp
-   ACAN2040.cpp
-   CBUSACAN2040.cpp
+   ${CBUSPICOLIB}/CBUSLED.cpp
+   ${CBUSPICOLIB}/CBUSSwitch.cpp
+   ${CBUSPICOLIB}/CBUSConfig.cpp
+   ${CBUSPICOLIB}/CBUSParams.cpp
+   ${CBUSPICOLIB}/SystemTick.cpp
+   ${CBUSPICOLIB}/CBUSCircularBuffer.cpp
+   ${CBUSPICOLIB}/CBUSLongMessage.cpp
+   ${CBUSPICOLIB}/GridConnectPicoW/CBUSGridConnect.cpp
+   ${CBUSPICOLIB}/CBUS.cpp
+   ${CBUSPICOLIB}/ACAN2040.cpp
+   ${CBUSPICOLIB}/CBUSACAN2040.cpp
+   # CANLock module using libary
    hw_config.c
    ${INIH}/ini.c
-   # CANLock module using libary
    CBUSWiFi.cpp
-   ${CANLOCK}/CANLock.cpp
+   CANLock.cpp
 )
 
 target_include_directories(CANLock PRIVATE
    ${CMAKE_CURRENT_SOURCE_DIR}
    ${CAN2040_SOURCE}
    ${CBUSDEFS}
+   ${CBUSPICOLIB}
+   ${CBUSPICOLIB}/GridConnectPicoW
    ${INIH}
 )
 
