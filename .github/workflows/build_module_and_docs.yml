@@ -86,10 +86,10 @@ jobs:
     - name: Add artifacts to publish
       run: |
         cd downloads
-        cp ${{github.workspace}}/build/src/CANLock.bin .
-        cp ${{github.workspace}}/build/src/CANLock.uf2 .
-        cp ${{github.workspace}}/build/src/CANLock.elf .
-        cp ${{github.workspace}}/build/src/CANLock.elf.map .
+        cp ${{github.workspace}}/build/CANLock.bin .
+        cp ${{github.workspace}}/build/CANLock.uf2 .
+        cp ${{github.workspace}}/build/CANLock.elf .
+        cp ${{github.workspace}}/build/CANLock.elf.map .
         cd ..
 
     - name: Upload build artifacts
