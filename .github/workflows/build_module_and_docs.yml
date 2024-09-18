@@ -35,11 +35,11 @@ jobs:
 
     - name: Checkout Submodules
       working-directory: ${{github.workspace}}
-      run: git submodule update --init        
+      run: git submodule update --init
 
     - name: Checkout pico-sdk submodules
       working-directory: ${{github.workspace}}/pico-sdk
-      run: git submodule update --init  
+      run: git submodule update --init
 
     - name: Use PICO SDK 1.5.1
       working-directory: ${{github.workspace}}/pico-sdk
@@ -77,10 +77,10 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ${{github.workspace}}/build/html        
+        publish_dir: ${{github.workspace}}/build/html
      
     - name: Create a temporary artifact downloads folder
-      working-directory: ${{github.workspace}}    
+      working-directory: ${{github.workspace}}
       run: mkdir downloads
         
     - name: Add artifacts to publish
@@ -91,10 +91,10 @@ jobs:
         cp ${{github.workspace}}/build/src/CANLock.elf .
         cp ${{github.workspace}}/build/src/CANLock.elf.map .
         cd ..
-    
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with: 
         name: build-binaries
-        path: downloads/  
-        
+        path: downloads/
+
