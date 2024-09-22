@@ -107,7 +107,7 @@ $(document).ready(function(){initNavTree('classCBUSWiFi.html',''); initResizable
 <p>Class to provide WiFi connectivity to CBUS.  
  <a href="classCBUSWiFi.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="CBUSWiFi_8h_source.html">CBUSWiFi.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="CBUSPicoLib_2CBUSWiFi_8h_source.html">CBUSWiFi.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -121,6 +121,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a13847bbb949a2c56efc395de0e432d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41a91f6bd3e1e4623833dbb700aa358b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCBUSWiFi.html#a41a91f6bd3e1e4623833dbb700aa358b">InitWebServer</a> (void)</td></tr>
 <tr class="memdesc:a41a91f6bd3e1e4623833dbb700aa358b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a web server to manage configuration.  <a href="classCBUSWiFi.html#a41a91f6bd3e1e4623833dbb700aa358b">More...</a><br /></td></tr>
+<tr class="separator:a41a91f6bd3e1e4623833dbb700aa358b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a457e754f17aefc6a507edf5bc146c0ad"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCBUSWiFi.html#a457e754f17aefc6a507edf5bc146c0ad">CBUSWiFi</a> ()</td></tr>
+<tr class="separator:a457e754f17aefc6a507edf5bc146c0ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27e5f6c477265f720e70b612b819985c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCBUSWiFi.html#a27e5f6c477265f720e70b612b819985c">InitializeClient</a> (void)</td></tr>
+<tr class="separator:a27e5f6c477265f720e70b612b819985c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13847bbb949a2c56efc395de0e432d67"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCBUSWiFi.html#a13847bbb949a2c56efc395de0e432d67">InitializeAP</a> (void)</td></tr>
+<tr class="separator:a13847bbb949a2c56efc395de0e432d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41a91f6bd3e1e4623833dbb700aa358b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCBUSWiFi.html#a41a91f6bd3e1e4623833dbb700aa358b">InitWebServer</a> (void)</td></tr>
 <tr class="separator:a41a91f6bd3e1e4623833dbb700aa358b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
@@ -143,12 +151,29 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a2604cccff56165bc11003950556d509f"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCBUSWiFi.html#a2604cccff56165bc11003950556d509f">getWPA2Enable</a> (void)</td></tr>
 <tr class="memdesc:a2604cccff56165bc11003950556d509f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the WPA2 autentication enable flag.  <a href="classCBUSWiFi.html#a2604cccff56165bc11003950556d509f">More...</a><br /></td></tr>
 <tr class="separator:a2604cccff56165bc11003950556d509f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bb5a71fb80f9a9b1e99039203a7886a"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCBUSWiFi.html#a6bb5a71fb80f9a9b1e99039203a7886a">ReadConfiguration</a> (void)</td></tr>
+<tr class="separator:a6bb5a71fb80f9a9b1e99039203a7886a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94714a450b7073601f680deba1a00ec0"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCBUSWiFi.html#a94714a450b7073601f680deba1a00ec0">isGridConnectEnabled</a> (void)</td></tr>
+<tr class="memdesc:a94714a450b7073601f680deba1a00ec0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if the Grid Connect server should be enabled.  <a href="classCBUSWiFi.html#a94714a450b7073601f680deba1a00ec0">More...</a><br /></td></tr>
+<tr class="separator:a94714a450b7073601f680deba1a00ec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabd570cad8c27ab857b3756684600a0d"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCBUSWiFi.html#aabd570cad8c27ab857b3756684600a0d">getGridConnectPort</a> (void)</td></tr>
+<tr class="memdesc:aabd570cad8c27ab857b3756684600a0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Grid Connect server port.  <a href="classCBUSWiFi.html#aabd570cad8c27ab857b3756684600a0d">More...</a><br /></td></tr>
+<tr class="separator:aabd570cad8c27ab857b3756684600a0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c764483e721bab4978241127ce2c5c9"><td class="memItemLeft" align="right" valign="top">static const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCBUSWiFi.html#a7c764483e721bab4978241127ce2c5c9">getCountryCode</a> (void)</td></tr>
+<tr class="memdesc:a7c764483e721bab4978241127ce2c5c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Country Code.  <a href="classCBUSWiFi.html#a7c764483e721bab4978241127ce2c5c9">More...</a><br /></td></tr>
+<tr class="separator:a7c764483e721bab4978241127ce2c5c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5132cc7dc10b25afc61c272a7d3d8da5"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCBUSWiFi.html#a5132cc7dc10b25afc61c272a7d3d8da5">getWPAEnable</a> (void)</td></tr>
+<tr class="memdesc:a5132cc7dc10b25afc61c272a7d3d8da5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the WPA authentication enable flag.  <a href="classCBUSWiFi.html#a5132cc7dc10b25afc61c272a7d3d8da5">More...</a><br /></td></tr>
+<tr class="separator:a5132cc7dc10b25afc61c272a7d3d8da5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2604cccff56165bc11003950556d509f"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCBUSWiFi.html#a2604cccff56165bc11003950556d509f">getWPA2Enable</a> (void)</td></tr>
+<tr class="memdesc:a2604cccff56165bc11003950556d509f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the WPA2 autentication enable flag.  <a href="classCBUSWiFi.html#a2604cccff56165bc11003950556d509f">More...</a><br /></td></tr>
+<tr class="separator:a2604cccff56165bc11003950556d509f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class to provide WiFi connectivity to CBUS. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a457e754f17aefc6a507edf5bc146c0ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a457e754f17aefc6a507edf5bc146c0ad">&#9670;&nbsp;</a></span>CBUSWiFi()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a457e754f17aefc6a507edf5bc146c0ad">&#9670;&nbsp;</a></span>CBUSWiFi() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -165,9 +190,55 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a457e754f17aefc6a507edf5bc146c0ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a457e754f17aefc6a507edf5bc146c0ad">&#9670;&nbsp;</a></span>CBUSWiFi() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CBUSWiFi::CBUSWiFi </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a7c764483e721bab4978241127ce2c5c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c764483e721bab4978241127ce2c5c9">&#9670;&nbsp;</a></span>getCountryCode()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c764483e721bab4978241127ce2c5c9">&#9670;&nbsp;</a></span>getCountryCode() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const char* CBUSWiFi::getCountryCode </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Country Code. </p>
+<dl class="section return"><dt>Returns</dt><dd>char* Country code as configured in the config INI </dd></dl>
+
+</div>
+</div>
+<a id="a7c764483e721bab4978241127ce2c5c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c764483e721bab4978241127ce2c5c9">&#9670;&nbsp;</a></span>getCountryCode() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -196,7 +267,36 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="aabd570cad8c27ab857b3756684600a0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabd570cad8c27ab857b3756684600a0d">&#9670;&nbsp;</a></span>getGridConnectPort()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aabd570cad8c27ab857b3756684600a0d">&#9670;&nbsp;</a></span>getGridConnectPort() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint16_t CBUSWiFi::getGridConnectPort </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Grid Connect server port. </p>
+<dl class="section return"><dt>Returns</dt><dd>uint16_t TCP port number to use for the Grid Connect server </dd></dl>
+
+</div>
+</div>
+<a id="aabd570cad8c27ab857b3756684600a0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabd570cad8c27ab857b3756684600a0d">&#9670;&nbsp;</a></span>getGridConnectPort() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -225,7 +325,38 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a2604cccff56165bc11003950556d509f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2604cccff56165bc11003950556d509f">&#9670;&nbsp;</a></span>getWPA2Enable()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2604cccff56165bc11003950556d509f">&#9670;&nbsp;</a></span>getWPA2Enable() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool CBUSWiFi::getWPA2Enable </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the WPA2 autentication enable flag. </p>
+<dl class="section return"><dt>Returns</dt><dd>true WPA2 authentication is enabled </dd>
+<dd>
+false WPA2 autentication is disabled </dd></dl>
+
+</div>
+</div>
+<a id="a2604cccff56165bc11003950556d509f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2604cccff56165bc11003950556d509f">&#9670;&nbsp;</a></span>getWPA2Enable() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -256,7 +387,38 @@ false WPA2 autentication is disabled </dd></dl>
 </div>
 </div>
 <a id="a5132cc7dc10b25afc61c272a7d3d8da5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5132cc7dc10b25afc61c272a7d3d8da5">&#9670;&nbsp;</a></span>getWPAEnable()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5132cc7dc10b25afc61c272a7d3d8da5">&#9670;&nbsp;</a></span>getWPAEnable() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool CBUSWiFi::getWPAEnable </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the WPA authentication enable flag. </p>
+<dl class="section return"><dt>Returns</dt><dd>true WPA authentication is enabled </dd>
+<dd>
+false WPA authentication is disabled </dd></dl>
+
+</div>
+</div>
+<a id="a5132cc7dc10b25afc61c272a7d3d8da5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5132cc7dc10b25afc61c272a7d3d8da5">&#9670;&nbsp;</a></span>getWPAEnable() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -287,7 +449,7 @@ false WPA authentication is disabled </dd></dl>
 </div>
 </div>
 <a id="a13847bbb949a2c56efc395de0e432d67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13847bbb949a2c56efc395de0e432d67">&#9670;&nbsp;</a></span>InitializeAP()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a13847bbb949a2c56efc395de0e432d67">&#9670;&nbsp;</a></span>InitializeAP() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -306,12 +468,30 @@ false WPA authentication is disabled </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>true </dd>
 <dd>
 false </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>AP setup </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo:</a></b></dt><dd>AP setup </dd></dl>
+
+</div>
+</div>
+<a id="a13847bbb949a2c56efc395de0e432d67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13847bbb949a2c56efc395de0e432d67">&#9670;&nbsp;</a></span>InitializeAP() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CBUSWiFi::InitializeAP </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <a id="a27e5f6c477265f720e70b612b819985c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27e5f6c477265f720e70b612b819985c">&#9670;&nbsp;</a></span>InitializeClient()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a27e5f6c477265f720e70b612b819985c">&#9670;&nbsp;</a></span>InitializeClient() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -333,8 +513,26 @@ false Failed to connect to the WiFi router </dd></dl>
 
 </div>
 </div>
+<a id="a27e5f6c477265f720e70b612b819985c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27e5f6c477265f720e70b612b819985c">&#9670;&nbsp;</a></span>InitializeClient() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CBUSWiFi::InitializeClient </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a41a91f6bd3e1e4623833dbb700aa358b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41a91f6bd3e1e4623833dbb700aa358b">&#9670;&nbsp;</a></span>InitWebServer()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a41a91f6bd3e1e4623833dbb700aa358b">&#9670;&nbsp;</a></span>InitWebServer() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -356,8 +554,57 @@ false if the web server was not initialized </dd></dl>
 
 </div>
 </div>
+<a id="a41a91f6bd3e1e4623833dbb700aa358b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41a91f6bd3e1e4623833dbb700aa358b">&#9670;&nbsp;</a></span>InitWebServer() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool CBUSWiFi::InitWebServer </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a94714a450b7073601f680deba1a00ec0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94714a450b7073601f680deba1a00ec0">&#9670;&nbsp;</a></span>isGridConnectEnabled()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a94714a450b7073601f680deba1a00ec0">&#9670;&nbsp;</a></span>isGridConnectEnabled() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool CBUSWiFi::isGridConnectEnabled </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determine if the Grid Connect server should be enabled. </p>
+<dl class="section return"><dt>Returns</dt><dd>true the Grid Connect server should be enabled </dd>
+<dd>
+false the Grid Connect server should not be enabled </dd></dl>
+
+</div>
+</div>
+<a id="a94714a450b7073601f680deba1a00ec0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94714a450b7073601f680deba1a00ec0">&#9670;&nbsp;</a></span>isGridConnectEnabled() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -388,7 +635,7 @@ false the Grid Connect server should not be enabled </dd></dl>
 </div>
 </div>
 <a id="af00f3f628bcb4a726353723161eba802"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af00f3f628bcb4a726353723161eba802">&#9670;&nbsp;</a></span>ReadConfiguration()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af00f3f628bcb4a726353723161eba802">&#9670;&nbsp;</a></span>ReadConfiguration() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -418,9 +665,35 @@ false the SD card could not be mounted, or error parsing the configuration file 
 
 </div>
 </div>
+<a id="a6bb5a71fb80f9a9b1e99039203a7886a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bb5a71fb80f9a9b1e99039203a7886a">&#9670;&nbsp;</a></span>ReadConfiguration() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool CBUSWiFi::ReadConfiguration </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/<a class="el" href="CBUSWiFi_8h_source.html">CBUSWiFi.h</a></li>
-<li>src/<a class="el" href="CBUSWiFi_8cpp.html">CBUSWiFi.cpp</a></li>
+<li>src/CBUSPicoLib/<a class="el" href="CBUSPicoLib_2CBUSWiFi_8h_source.html">CBUSWiFi.h</a></li>
+<li>src/CBUSPicoLib/<a class="el" href="CBUSPicoLib_2CBUSWiFi_8cpp.html">CBUSWiFi.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

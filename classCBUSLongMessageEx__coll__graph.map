@@ -1,0 +1,14 @@
+<map id="CBUSLongMessageEx" name="CBUSLongMessageEx">
+<area shape="rect" id="node1" title="A derived class to extend the base long message class to handle multiple concurrent messages,..." alt="" coords="561,5,724,32"/>
+<area shape="rect" id="node2" href="$classCBUSLongMessage.html" title="A basic class to send and receive CBUS long messages per MERG RFC 0005, handles a single message,..." alt="" coords="225,40,372,67"/>
+<area shape="rect" id="node3" href="$classCBUSbase.html" title="An abstract class to encapsulate CAN bus and CBUS processing for a CBUS module, it must be implemente..." alt="" coords="598,247,687,273"/>
+<area shape="rect" id="node4" href="$CBUSParams_8h.html#structcbusparam__t" title="Type for holding configuration parameters, size is plus one to include param zero,..." alt="" coords="245,123,352,149"/>
+<area shape="rect" id="node5" href="$classCBUSSwitch.html" title="Class to encapsulate a non&#45;blocking switch class." alt="" coords="248,173,349,200"/>
+<area shape="rect" id="node6" href="$CBUS_8h.html#structmodule__name__t" title="Type for holding the Module Name." alt="" coords="235,224,362,251"/>
+<area shape="rect" id="node7" href="$classCBUSGridConnect.html" title=" " alt="" coords="229,275,368,301"/>
+<area shape="rect" id="node8" href="$classCBUSGridConnectBase.html" title="Pure virtual base class for GridConnect interface." alt="" coords="5,275,176,301"/>
+<area shape="rect" id="node9" href="$classCBUSConfig.html" title="a class to encapsulate CBUS module configuration, events, NVs, EEPROM, etc" alt="" coords="249,325,348,352"/>
+<area shape="rect" id="node10" href="$classCBUSLED.html" title="class to encapsulate a non&#45;blocking LED" alt="" coords="257,376,340,403"/>
+<area shape="rect" id="node11" href="$CBUSCircularBuffer_8h.html#classCANFrame" title="Class to hold a CAN/CBUS frame." alt="" coords="253,449,344,476"/>
+<area shape="rect" id="node12" href="$classCBUScoe.html" title="A class to manage consuming&#45;own&#45;CBUS events." alt="" coords="258,500,339,527"/>
+</map>

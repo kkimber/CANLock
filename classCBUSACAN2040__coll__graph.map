@@ -1,0 +1,16 @@
+<map id="CBUSACAN2040" name="CBUSACAN2040">
+<area shape="rect" id="node1" title="An implementation of the abstract base CBUSbased class using the ACAN2040 wrapper of the RP2040 PIO C..." alt="" coords="887,271,1015,297"/>
+<area shape="rect" id="node2" href="$classCBUSbase.html" title="An abstract class to encapsulate CAN bus and CBUS processing for a CBUS module, it must be implemente..." alt="" coords="570,177,659,204"/>
+<area shape="rect" id="node10" href="$classCBUSLongMessage.html" title="A basic class to send and receive CBUS long messages per MERG RFC 0005, handles a single message,..." alt="" coords="877,155,1024,181"/>
+<area shape="rect" id="node3" href="$CBUSParams_8h.html#structcbusparam__t" title="Type for holding configuration parameters, size is plus one to include param zero,..." alt="" coords="241,5,348,32"/>
+<area shape="rect" id="node4" href="$classCBUSSwitch.html" title="Class to encapsulate a non&#45;blocking switch class." alt="" coords="244,56,345,83"/>
+<area shape="rect" id="node5" href="$CBUS_8h.html#structmodule__name__t" title="Type for holding the Module Name." alt="" coords="231,107,358,133"/>
+<area shape="rect" id="node6" href="$classCBUSGridConnect.html" title=" " alt="" coords="225,157,364,184"/>
+<area shape="rect" id="node7" href="$classCBUSGridConnectBase.html" title="Pure virtual base class for GridConnect interface." alt="" coords="5,157,176,184"/>
+<area shape="rect" id="node8" href="$classCBUSConfig.html" title="a class to encapsulate CBUS module configuration, events, NVs, EEPROM, etc" alt="" coords="245,208,344,235"/>
+<area shape="rect" id="node9" href="$classCBUSLED.html" title="class to encapsulate a non&#45;blocking LED" alt="" coords="253,260,336,287"/>
+<area shape="rect" id="node11" href="$CBUSCircularBuffer_8h.html#classCANFrame" title="Class to hold a CAN/CBUS frame." alt="" coords="249,335,340,361"/>
+<area shape="rect" id="node12" href="$classCBUScoe.html" title="A class to manage consuming&#45;own&#45;CBUS events." alt="" coords="254,385,335,412"/>
+<area shape="rect" id="node13" href="$classCBUSCircularBuffer.html" title="A circular buffer class for holding CAN/CBUS Messages." alt="" coords="541,271,688,297"/>
+<area shape="rect" id="node14" href="$classACAN2040.html" title="Library class that wraps the CAN2040 code." alt="" coords="569,321,660,348"/>
+</map>

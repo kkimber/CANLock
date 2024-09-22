@@ -51,18 +51,22 @@ var NAVTREE =
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ],
+        [ "All", "functions.html", "functions_dup" ],
+        [ "Functions", "functions_func.html", "functions_func" ],
         [ "Variables", "functions_vars.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [
-        [ "All", "globals.html", null ],
+        [ "All", "globals.html", "globals_dup" ],
         [ "Functions", "globals_func.html", null ],
         [ "Variables", "globals_vars.html", null ],
+        [ "Typedefs", "globals_type.html", null ],
+        [ "Enumerations", "globals_enum.html", null ],
+        [ "Enumerator", "globals_eval.html", null ],
         [ "Macros", "globals_defs.html", null ]
       ] ]
     ] ]
@@ -71,7 +75,10 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"CANLock_8cpp.html"
+"ACAN2040_8cpp.html",
+"CBUS_8h.html#a0cf45d5bac94e7c1214acc431ffab483",
+"classCBUSbase.html#a055c083fe7b6fbbfc9521bf013467caa",
+"lwipopts_8h.html#ad68e8e06ea4c2be1b3508e813a49f7cc"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

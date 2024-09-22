@@ -1,0 +1,13 @@
+<map id="CBUSLongMessage" name="CBUSLongMessage">
+<area shape="rect" id="node1" title="A basic class to send and receive CBUS long messages per MERG RFC 0005, handles a single message,..." alt="" coords="225,25,372,52"/>
+<area shape="rect" id="node2" href="$classCBUSbase.html" title="An abstract class to encapsulate CAN bus and CBUS processing for a CBUS module, it must be implemente..." alt="" coords="561,215,651,241"/>
+<area shape="rect" id="node3" href="$CBUSParams_8h.html#structcbusparam__t" title="Type for holding configuration parameters, size is plus one to include param zero,..." alt="" coords="245,91,352,117"/>
+<area shape="rect" id="node4" href="$classCBUSSwitch.html" title="Class to encapsulate a non&#45;blocking switch class." alt="" coords="248,141,349,168"/>
+<area shape="rect" id="node5" href="$CBUS_8h.html#structmodule__name__t" title="Type for holding the Module Name." alt="" coords="235,192,362,219"/>
+<area shape="rect" id="node6" href="$classCBUSGridConnect.html" title=" " alt="" coords="229,243,368,269"/>
+<area shape="rect" id="node7" href="$classCBUSGridConnectBase.html" title="Pure virtual base class for GridConnect interface." alt="" coords="5,243,176,269"/>
+<area shape="rect" id="node8" href="$classCBUSConfig.html" title="a class to encapsulate CBUS module configuration, events, NVs, EEPROM, etc" alt="" coords="249,293,348,320"/>
+<area shape="rect" id="node9" href="$classCBUSLED.html" title="class to encapsulate a non&#45;blocking LED" alt="" coords="257,344,340,371"/>
+<area shape="rect" id="node10" href="$CBUSCircularBuffer_8h.html#classCANFrame" title="Class to hold a CAN/CBUS frame." alt="" coords="253,417,344,444"/>
+<area shape="rect" id="node11" href="$classCBUScoe.html" title="A class to manage consuming&#45;own&#45;CBUS events." alt="" coords="258,468,339,495"/>
+</map>
