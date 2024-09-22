@@ -142,6 +142,8 @@ if (DOXYGEN_FOUND)
       ${PROJECT_SOURCE_DIR}/doc/webserver.md
       ${PROJECT_SOURCE_DIR}/doc/nodevars.md
       ${PROJECT_SOURCE_DIR}/doc/ui.md
+      ${PROJECT_SOURCE_DIR}/src/CBUSPicoLib
+      ${PROJECT_SOURCE_DIR}/src/CBUSPicoLib/GridConnectPicoW
       ${PROJECT_SOURCE_DIR}/src
       ${PROJECT_SOURCE_DIR}/doc
       COMMENT "Generate CANLock Docs"
